@@ -35,13 +35,7 @@ print_r($arr);
 echo '</pre><br>';
 echo '<pre>';
 print_r('string');
-echo '</pre><br>';
-
-
-
-
-
-echo '<pre>';
+echo '<br>';
 
 myPrint_r($arr);
 
