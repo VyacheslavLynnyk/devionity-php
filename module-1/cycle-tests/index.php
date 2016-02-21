@@ -51,8 +51,8 @@ function whileBanchmark($array)
     return $stopTime - $startTime;
 }
 
-$testArr1_10000 = createArr(10000);
-$testArr1_10000_s = createArr(100000, 's');
+$testArr1 = createArr(1000000);
+$testArr1_10000_s = createArr(1000000, 's');
 
 //$testArr1_1000000 = [];
 //$testArr2_100_100 = [];
@@ -74,17 +74,31 @@ $testArr1_10000_s = createArr(100000, 's');
 <h1> Тест скорости циклов </h1>
 
 <?php
-$while = whileBanchmark($testArr1_10000);
-$for = forBanchmark($testArr1_10000);
-$foreach = foreachBanchmark($testArr1_10000);
-$max  = max($while, $for, $foreach);
+for($j = 1; $j <= 2; $j++) {
+    for ($i = 0; $i <= 5; $i++) {
+        $for[$i] = forBanchmark($testArr1);
+        $foreach[$i] = foreachBanchmark($testArr1);
+        $while[$i] = whileBanchmark($testArr1);
 
-
-echo '<h2>От каждого елемена отнимаем 15</h2>';
-echo 'test while - %'. ($while/$max) * 100 . ' time: ' . $while, '<br>';
-echo 'test for - %'. ($for/$max) * 100 . ' time: ' . $for . '<br>';
-echo 'test foreach - %'. ($foreach/$max) * 100 . ' time: ' . $foreach . '<br>';
-
+    }
+    printRes($for, $foreach, $while);
+}
+function printRes($for, $foreach, $while)
+{
+    unset($for[0], $while[0], $foreach[0]);
+    $whileAv = array_sum($while)/sizeof($while);
+    $forAv = array_sum($for)/sizeof($for);
+    $foreachAv = array_sum($foreach)/sizeof($foreach);
+    $max = max($forAv, $foreachAv, $whileAv);
+    $data = "<h2>От каждого елемена отнимаем 15, 1000000 елементов масива</h2>\n"
+    . 'test while - %' . ($whileAv / $max) * 100 . ' time: ' . $whileAv . "<br>\n"
+    . 'test for - %' . ($forAv / $max) * 100 . ' time: ' . $forAv . "<br>\n"
+    . 'test foreach - %' . ($foreachAv / $max) * 100 . ' time: ' . $foreachAv . "<br>\n";
+    echo $data;
+    $path = 'test--Arrays'.date('d_hms').".txt";
+    var_dump($path);
+    file_put_contents($path, $data, FILE_APPEND);
+}
 
 
 echo '<h2>Каждый елемент </h2>';
