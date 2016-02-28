@@ -17,7 +17,7 @@ function createArr($elements, $dataType = 'num', $strLength = 5)
     return $arr;
 }
 
-function forBanchmark($array)
+function forTest1($array)
 {
     $startTime = microtime(true);
     $count = sizeof($array);
@@ -28,7 +28,7 @@ function forBanchmark($array)
     return $stopTime - $startTime;
 }
 
-function foreachBanchmark($array)
+function foreachTest1($array)
 {
     $startTime = microtime(true);
     foreach ($array as $key => $value) {
@@ -38,7 +38,7 @@ function foreachBanchmark($array)
     return $stopTime - $startTime;
 }
 
-function whileBanchmark($array)
+function whileTest1($array)
 {
     $startTime = microtime(true);
     $i = 0;
@@ -51,24 +51,40 @@ function whileBanchmark($array)
     return $stopTime - $startTime;
 }
 
-function printRes($for, $foreach, $while)
+function doWhileTest1($array)
 {
-    unset($for[0], $while[0], $foreach[0]);
+    $startTime = microtime(true);
+    $i = 0;
+    $count = sizeof($array);
+    do {
+        $array[$i] = $array[$i] - 15;
+        $i++;
+    } while ($i < $count);
+    $stopTime = microtime(true);
+    return $stopTime - $startTime;
+}
+function printRes($for, $foreach, $while, $doWhile)
+{
+    unset($for[0], $while[0], $foreach[0], $doWhile[0]);
     $whileAv = array_sum($while)/sizeof($while);
+    $doWhileAv = array_sum($doWhile)/sizeof($doWhile);
     $forAv = array_sum($for)/sizeof($for);
     $foreachAv = array_sum($foreach)/sizeof($foreach);
-    $max = max($forAv, $foreachAv, $whileAv);
-    $data = "<h2>От каждого елемена отнимаем 15, 1000 елементов масива</h2>\n"
+    $max = max($forAv, $foreachAv, $whileAv, $doWhileAv);
+    $data = "<h2>От каждого елемена отнимаем 15, 100000 елементов масива</h2>\n"
         . 'test while - %' . ($whileAv / $max) * 100 . ' time: ' . $whileAv . "<br>\n"
+        . 'test Do while - %' . ($doWhileAv / $max) * 100 . ' time: ' . $doWhileAv . "<br>\n"
         . 'test for - %' . ($forAv / $max) * 100 . ' time: ' . $forAv . "<br>\n"
         . 'test foreach - %' . ($foreachAv / $max) * 100 . ' time: ' . $foreachAv . "<br>\n";
     echo $data;
-    $path = 'test--1Array(1000)_'.date('d_hms').".txt";
+    $path = 'test---1Array(100000)_'.date('d_hms').".txt";
     //var_dump($path);
     file_put_contents($path, $data, FILE_APPEND);
 }
 
-$testArr1 = createArr(1000);
+//$testArr1 = createArr(1000);
+//$testArr1 = createArr(10000);
+$testArr1 = createArr(100000);
 
 ?>
 <h1> Тест скорости циклов </h1>
@@ -76,12 +92,12 @@ $testArr1 = createArr(1000);
 <?php
 for($j = 1; $j <= 2; $j++) {
     for ($i = 0; $i <= 10; $i++) {
-        $foreach[$i] = foreachBanchmark($testArr1);
-        $for[$i] = forBanchmark($testArr1);
-        $while[$i] = whileBanchmark($testArr1);
-
+        $foreach[$i] = foreachTest1($testArr1);
+        $for[$i] = forTest1($testArr1);
+        $while[$i] = whileTest1($testArr1);
+        $doWhile[$i] = doWhileTest1($testArr1);
     }
-    printRes($for, $foreach, $while);
+    printRes($for, $foreach, $while, $doWhile);
 }
 
 
