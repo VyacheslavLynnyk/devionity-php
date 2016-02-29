@@ -47,14 +47,14 @@
             border-top: 1px dotted brown;
             color: brown;
         }
-        .folder, .files {
+        .folder, .file {
             display: block;
             padding: 13px 5px 2px 10px;
             /*width: 100%;*/
             /*height: 20px;*/
             background: white;
         }
-        .files {
+        .file {
             color: #3056a0;
         }
         .rename {
@@ -64,7 +64,7 @@
             font-size: 10px;
         }
         #folders > .folder:hover > .rename:first-child,
-        .folder > .files:hover > .rename:first-child,
+        .folder > .file:hover > .rename:first-child,
         .folder > .folder:hover > .rename:first-child {
             visibility: visible;
             link: green;
@@ -78,7 +78,7 @@
     </style>
 </head>
 <body>
-
+<?php include_once __DIR__ . '/func.lib.php'; ?>
     <div class="container">
         <form action="<?= $_SERVER['PHP_SELF']?>" method="POST">
         <table>
@@ -88,42 +88,32 @@
             </tr>
             <tr>
                 <td id="folders">
-                    <div class="folder">
-                        Dir1 <span class="rename"><a href="">rename</a></span>
-                    </div>
-                    <div class="folder">
-                        Dir2 <span class="rename">rename</span>
-                        <div class="folder">
-                            Dir3 <span class="rename">rename</span>
-                            <div class="files">
-                                File_1.txt <span class="rename">rename</span>
-                            </div>
-                            <div class="files">
-                                File_1.txt <span class="rename">rename</span>
-                            </div>
-                            <div class="files">
-                                File_1.txt <span class="rename">rename</span>
-                            </div>
-                            <div class="folder">
-                                Dir4 <span class="rename">rename</span>
-                                <div class="files">
-                                    File_1.txt <span class="rename">rename</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php scanFolder($path, $link);
+//                    if (isset($_GET['filename'])) {
+//                        $filename = $_GET['filename'];
+//                        if (is_dir($filename)) {
+//                            scanFolder($filename, $filename);
+//                        }
+//                    }
+                    //print_r($filename);?>
                 </td>
                 <td>
-                    <div class="textwrapper">
-                        <textarea name="content" id="text"><?php
-                            if (is_dir($path.'/'.$filename)) {
-                                echo $filename;
-                            } elseif (is_file($path.'/'.$filename)) {
-                                file_get_contents($_GET['filename']);
-                            }
-                      ?></textarea>
-                        <input type="hidden" name="filename" value="<?=$_GET['filename']?>">
-                    </div>
+                    <?php if (isset($_GET['filename'])) : ?>
+                        echo 'ok';
+                        <div class="textwrapper">
+                            <textarea name="content" id="text"><?php
+                                $filename = $_GET['filename'];
+
+                                 if (is_file($filename)) {
+                                    $file = file_get_contents(__DIR__.'/container/file3.txt');
+                                    echo $file;
+                                }
+                          ?></textarea>
+
+                            <input type="hidden" name="filename" value="<?=$_GET['filename']?>">
+                        </div>
+                    <?php
+                    endif ?>
                 </td>
             </tr>
             <tr>
