@@ -17,7 +17,7 @@ function createArr($elements, $dataType = 'num', $strLength = 5)
     return $arr;
 }
 
-function for_2Arrays($arrays)
+function for_3Arrays($arrays)
 {
     $startTime = microtime(true);
     $count = sizeof($arrays);
@@ -34,7 +34,7 @@ function for_2Arrays($arrays)
     return $stopTime - $startTime;
 }
 
-function foreach_2Arrays($arrays)
+function foreach_3Arrays($arrays)
 {
     $startTime = microtime(true);
     foreach ($arrays as $firstKey => $array2) {
@@ -48,7 +48,7 @@ function foreach_2Arrays($arrays)
     return $stopTime - $startTime;
 }
 
-function while_2Arrays($array)
+function while_3Arrays($array)
 {
     $startTime = microtime(true);
     $i = 0;
@@ -73,7 +73,7 @@ function while_2Arrays($array)
     return $stopTime - $startTime;
 }
 
-function doWhile_2Arrays($array)
+function doWhile_3Arrays($array)
 {
     $startTime = microtime(true);
     $i = 0;
@@ -137,10 +137,10 @@ for ($k = 0; $k < $elements; $k++) {
 <?php
 for($j = 1; $j <= 2; $j++) {
     for ($i = 0; $i <= 4; $i++) {
-        $while[$i] = while_2Arrays($testArr);
-        $doWhile[$i] = doWhile_2Arrays($testArr);
-        $foreach[$i] = foreach_2Arrays($testArr);
-        $for[$i] = for_2Arrays($testArr);
+        $while[$i] = while_3Arrays($testArr);
+        $doWhile[$i] = doWhile_3Arrays($testArr);
+        $foreach[$i] = foreach_3Arrays($testArr);
+        $for[$i] = for_3Arrays($testArr);
 
     }
     printRes($for, $foreach, $while, $doWhile);
