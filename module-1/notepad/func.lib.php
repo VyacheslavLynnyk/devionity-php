@@ -15,7 +15,7 @@ function getPathArr($path)
     return ($pathArr) ? $pathArr : [];
 }
 
-function getPartPath($pathArr, $level )
+function getPartPath($pathArr, $level)
 {
     if (sizeof($pathArr) <= $level ) {
         return false;
@@ -64,7 +64,8 @@ function renameIt($path)
 {
     if (isset($_POST['rename'])) {
         if (is_dir($_POST['filename'])) {
-            rename($_POST['filename'], $path. '/' .$_POST['content']);
+            $dirName = strip_tags(nl2br($_POST['content']));
+            rename($_POST['filename'], $path. '/' . $dirName);
         } elseif (is_file($_POST['filename'])){
             rename($_POST['filename'], $_POST['content']);
         }
