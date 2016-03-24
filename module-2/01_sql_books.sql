@@ -104,3 +104,12 @@ FROM books, authors, styles
 
 -- Охотно верю что  индекс увеличивает производительность
 -- но с ssd на этой базе раници никакой 0.00 сек :)
+
+
+SELECT books.book, authors.author, styles.style, books.price, books.value 
+FROM books 
+JOIN (authors, styles) ON (
+		authors.id = books.author_id AND
+		styles.id = books.style_id AND
+		books.price BETWEEN 100 AND 500
+);
