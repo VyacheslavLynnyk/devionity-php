@@ -16,7 +16,34 @@ function isAuthorized() {
     return false;
 }
 
-function login() {
+function login($link, $user_id) {
     $_SESSION['auth'] = 'ok';
+    $_SESSION['user_id'] = $user_id;
+
+    $user_info = getUserById($link, $user_id);
+    $_SESSION['user'] = $user_info['user'];
+    $_SESSION['role'] = $user_info['role'];
+
     header('LOCATION: ./index.php');
+}
+
+function canEdit()
+{
+    if ( isset($_SESSION['role']) && ($_SESSION['role'] == 'admin') ) {
+        return '';
+    }
+    return 'disabled';
+}
+
+function canAdd()
+{
+    if ( isset($_SESSION['role']) && ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user') ) {
+        return '';
+    }
+    return 'input--hidden';
+}
+
+function getName()
+{
+    return $_SESSION['user'];
 }

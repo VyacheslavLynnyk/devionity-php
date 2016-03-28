@@ -13,16 +13,17 @@ if (isset($_POST['go'])) {
         require_once __DIR__ . '/db-conf.php';
         $link = connect();
 
-        $login = $_POST['login'];
-        $pass = $_POST['pass'];
+        $login = mysqli_real_escape_string($link, $_POST['login']);
+        $pass = mysqli_real_escape_string($link, $_POST['pass']);
+        $pass = md5($pass . md5('solt'));
 
-        $sql = "SELECT user, pass FROM users WHERE user='$login'";
+        $sql = "SELECT id, user, pass FROM users WHERE user='$login'";
         $wasInBase = ($res = mysqli_query($link, $sql)) ? mysqli_fetch_assoc($res) : false ;
         if ($wasInBase == false) {
-            createUser($link, $login, $pass);
-            login();
+            $user_id = createUser($link, $login, $pass);
+            login($link, $user_id);
         } elseif (isset($wasInBase['pass']) && $wasInBase['pass'] == $pass) {
-                login();
+                login($link, $wasInBase['id']);
         } else {
             $message = 'Неправильный пароль или пользователь с таким логином уже существует.';
         }
