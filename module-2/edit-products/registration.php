@@ -31,10 +31,23 @@ if (isset($_POST['go'])) {
 }
 
 ?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="registration">
+        <form action="<?= $_SERVER['PHP_SELF']?>" method="post">
+            <h2>Sign In / Registrate</h2>
+            <input type="text" name="login" required placeholder="login">
+            <input type="password" name="pass" required placeholder="password">
+            <input type="submit" value="login / registrate" name="go">
+            <label for=""><?= isset($message) ? $message : '';?></label>
+        </form>
+    </div>
+</body>
+</html>
 
-<form action="<?= $_SERVER['PHP_SELF']?>" method="post">
-    <input type="text" name="login" required placeholder="login">
-    <input type="password" name="pass" required placeholder="password">
-    <input type="submit" value="login / register" name="go">
-    <label for=""><?= isset($message) ? $message : '';?></label>
-</form>

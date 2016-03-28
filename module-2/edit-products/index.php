@@ -8,15 +8,10 @@ if (isAuthorized() !== true) {
     header('LOCATION: ./registration.php');
 }
 
-var_dump(isAuthorized());
-
 $link = connect();
-
 $update = updateProducts($link);
-echo $update;
-
+//echo $update;
 $items = getItems($link);
-
 ?>
 
 <!doctype html>
@@ -27,11 +22,16 @@ $items = getItems($link);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<a href="logout.php"> Logout(<?=getName(); ?>)</a>
+    <nav id="nav">
+        <ul>
+            <li><a href="logout.php"> Logout(<?=getName(); ?>)</a></li>
+        </ul>
+
+    </nav>
     <table id="table-products">
+    <?php $userCanAdd = canAdd(); ?>
 
-
-        <tr class="add-item <?=canAdd(); ?>">
+        <tr class="add-item <?=$userCanAdd; ?>">
             <td><form method="POST" action="<?= $_SERVER['PHP_SELF']?>" ></td>
             <td>Add new item</td>
             <td><input type="text" name="name" value=""></td>
@@ -40,7 +40,7 @@ $items = getItems($link);
             </td>
             <td><input type="text" name="price" value="" ></td>
             <td><input type="text" name="image"  value="" ></td>
-            <td><input type="text" name="is_active" value="" ></td>
+            <td <?=classAdd($userCanAdd); ?>><input type="text" name="is_active" value="" ></td>
             <td><input type="text" name="vendor"  value="" ></td>
             <td></td>
             <td><input type="submit" value="save" name="action" ></td>
@@ -49,7 +49,7 @@ $items = getItems($link);
         <tr>
             <td>
             <th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Image</th>
-            <th>IS Active</th><th>vendor</th><th>Edit Date</th><th>saving</th>
+            <th <?=classAdd($userCanAdd); ?>>IS Active</th><th>vendor</th><th>Edit Date</th><th>saving</th>
             </td>
         </tr>
     <?php foreach ($items as $item) : ?>
@@ -64,7 +64,9 @@ $items = getItems($link);
                     </td>
                     <td><input type="text" name="price" <?=$editable;?> value="<?= $item['price']?>" ></td>
                     <td><input type="text" name="image" <?=$editable;?> value="<?= $item['image']?>" ></td>
-                    <td><input type="text" name="is_active" <?=$editable;?> value="<?= $item['is_active']?>" ></td>
+                    <td <?=classAdd($userCanAdd);?>>
+                        <input type="text" name="is_active" <?=$editable;?> value="<?= $item['is_active']?>" >
+                    </td>
                     <td><input type="text" name="vendor" <?=$editable;?> value="<?= $item['vendor']?>" ></td>
                     <td><input type="text" name="edit_date" <?=$editable;?> disabled value="<?= $item['edit_date']?>"></td>
                     <td><input type="submit" value="save" name="action" <?=$editable;?> ></td>

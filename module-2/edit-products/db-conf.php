@@ -26,7 +26,11 @@ function getUserById($link, $user_id)
 
 function getItems($link)
 {
+
     $sql = 'SELECT * FROM products';
+    if (isset($_SESSION['role']) && ($_SESSION['role'] != 'admin') ) {
+        $sql .= ' WHERE is_active=1';
+    }
     $res = mysqli_query($link, $sql);
     $items = [];
     while ($row = mysqli_fetch_assoc($res)) {
@@ -61,7 +65,7 @@ function updateProducts($link)
                 $id = (isset($id)) ? "id=$id, " : '';
                 $sql = "INSERT INTO products SET $id".$data;
             }
-          var_dump($sql);
+//          var_dump($sql);
             mysqli_query($link, $sql);
         }
     }

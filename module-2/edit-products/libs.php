@@ -40,10 +40,18 @@ function canAdd()
     if ( isset($_SESSION['role']) && ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user') ) {
         return '';
     }
-    return 'input--hidden';
+    return 'is--hidden';
 }
 
 function getName()
 {
     return $_SESSION['user'];
+}
+
+function classAdd($className)
+{
+    if ($className != null) {
+        return ' class="' . $className . '"';
+    }
+    return '';
 }

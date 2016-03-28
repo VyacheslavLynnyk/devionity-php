@@ -1,3 +1,39 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#nav {
+    display: block;
+    width: 100%;
+    background: #000;
+    margin: 0 0 10px 0;
+    height: 30px;
+}
+#nav ul {
+    margin: 0;
+    display: inline-block;
+    width: 80%;
+    text-align: right;
+}
+#nav ul > li {
+    height: 10px;
+    list-style: none;
+}
+#nav a {
+    display: inline-block;
+    padding: 5px 10px 10px 10px;
+    color: yellow;
+    background: rgba(128,128,128, 0.5);
+    height: 15px;
+    font: 1em Arial, sans-serif;
+}
+
+#nav a:hover {
+    color: orangered;
+    background: rgba(128,128,128, 0.2);
+}
+
 #table-products {
     border-collapse: collapse;
     width: 80%;
@@ -13,15 +49,15 @@
     height: 60px;
 
 }
-.input--hidden {
+.is--hidden {
     display: none;
 }
 
-.add-item {
+#table-products .add-item {
     background: yellow;
 }
 .edit-item {
-    background: rgba(0,128,255, 0.2);
+    background: rgba(0,200,200, 0.2);
 }
 
 .add-item td {
@@ -31,4 +67,48 @@
 
 .add-item input[type=text] {
     height: 34px;
+}
+
+#registration {
+    display: block;
+    text-align: center;
+    width: 100%;
+    /*height: 160px;*/
+    background: #bbddff;
+    margin: auto;
+}
+
+#registration form {
+    padding: calc(50vh - 50px) 0;
+    height: 100px;
+}
+#registration form h2 {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 10px #00bbbb;
+}
+
+#registration form input {
+    padding: 7px;
+    /*min-width: calc(25vw);*/
+    width: 140px;
+    margin: 5px;
+    font-size: 1em;
+}
+
+
+
+textarea:disabled,
+input[type="text"]:disabled {
+    background: inherit;
+    color: black;
+
+}
+input[type="text"]:disabled  {
+    border: none;
+}
+
+textarea:disabled {
+    border: 1px dotted black;
 }
