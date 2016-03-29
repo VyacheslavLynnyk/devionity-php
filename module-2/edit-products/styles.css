@@ -25,7 +25,7 @@ html, body {
     padding: 5px 10px 10px 10px;
     color: yellow;
     background: rgba(128,128,128, 0.5);
-    height: 15px;
+    height: 12px;
     font: 1em Arial, sans-serif;
 }
 
@@ -36,6 +36,7 @@ html, body {
 
 #table-products {
     border-collapse: collapse;
+    border: 1px solid #000;
     width: 80%;
     margin: auto;
 }
@@ -43,6 +44,28 @@ html, body {
 #table-products tr > th {
     height: 30px;
 }
+
+#table-products td > input {
+    text-align: center;
+    padding-left: 5px;
+}
+
+.width--30 {
+    width: 30px;
+}
+.width--80 {
+    width: 80px;
+}
+.width--100 {
+    width: 100px;
+}.width--150 {
+     width: 1500px;
+ }
+.width--200 {
+    width: 200px;
+}
+
+
 
 .add-item, .edit-item {
     border: 1px solid #000;
@@ -56,10 +79,18 @@ html, body {
 #table-products .add-item {
     background: yellow;
 }
-.edit-item {
-    background: rgba(0,200,200, 0.2);
+
+#table-products  tr td > th {
+    width: 5%;
 }
 
+.edit-item {
+    /*background: rgba(0,200,200, 0.2);*/
+}
+
+.edit-item:nth-child(even) {
+    background: gainsboro;
+}
 .add-item td {
     padding: 5px;
     vertical-align: middle;
@@ -98,12 +129,19 @@ html, body {
 }
 
 
+#table-products textarea {
+    background: white;
+    resize: vertical;
+}
+
+#table-products textarea:hover {
+    overflow: auto;
+}
 
 textarea:disabled,
 input[type="text"]:disabled {
     background: inherit;
     color: black;
-
 }
 input[type="text"]:disabled  {
     border: none;

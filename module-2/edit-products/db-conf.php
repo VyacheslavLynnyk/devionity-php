@@ -26,11 +26,40 @@ function getUserById($link, $user_id)
 
 function getItems($link)
 {
-
     $sql = 'SELECT * FROM products';
     if (isset($_SESSION['role']) && ($_SESSION['role'] != 'admin') ) {
-        $sql .= ' WHERE is_active=1';
+        $role= 'is_active=1';
+        $where[] = $role;
+    } else {
+        $role = '';
     }
+    if ($vendor = filterVendors()) {
+        $vendor = " vendor='$vendor'";
+        $where[] = $vendor;
+    } else {
+        $vendor = '';
+    }
+    if ($prices = filterPrice()) {
+        if ($prices[0] < $prices[1]) {
+            $price = " price BETWEEN ${prices[0]} AND ${prices[1]}";
+            $where[] = $price;
+        } elseif ($prices[0] > $prices[1]) {
+            $price = " price > ${prices[0]}";
+            $where[] = $price;
+        } else {
+            $price = '';
+        }
+    }
+
+    if (isset($where) > 0) {
+        $sql .= " WHERE ";
+        $sql .= implode(' AND ', $where);
+    }
+    if ($price_order = getPriceOrder()) {
+        $sql .= " ORDER BY price $price_order";
+    }
+
+//    var_dump($sql);
     $res = mysqli_query($link, $sql);
     $items = [];
     while ($row = mysqli_fetch_assoc($res)) {
@@ -65,7 +94,6 @@ function updateProducts($link)
                 $id = (isset($id)) ? "id=$id, " : '';
                 $sql = "INSERT INTO products SET $id".$data;
             }
-//          var_dump($sql);
             mysqli_query($link, $sql);
         }
     }
